@@ -269,7 +269,10 @@ export default {
     set: 'Set',
     subitem: 'Subitem',
     formValidation: 'Form validation',
-    verifyReset: 'Verify reset'
+    verifyReset: 'Verify reset',
+    batchSize: 'Batch size',
+    learningRate: 'Learning rate',
+    epoch: 'epoch'
   },
   guideDemo: {
     guide: 'Guide',

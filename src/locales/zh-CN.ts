@@ -268,7 +268,10 @@ export default {
     set: '设置',
     subitem: '子项',
     formValidation: '表单验证',
-    verifyReset: '验证重置'
+    verifyReset: '验证重置',
+    batchSize: 'batch-size',
+    learningRate: '学习率',
+    epoch: 'epoch'
   },
   guideDemo: {
     guide: '引导页',
