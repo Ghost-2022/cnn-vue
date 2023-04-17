@@ -48,9 +48,6 @@ const toLogin = () => {
           >
             <img src="@/assets/svgs/login-box-bg.svg" key="1" alt="" class="w-350px" />
             <div class="text-3xl text-white" key="2">{{ t('login.welcome') }}</div>
-            <div class="mt-5 font-normal text-white text-14px" key="3">
-              {{ t('login.message') }}
-            </div>
           </TransitionGroup>
         </div>
       </div>
@@ -63,7 +60,6 @@ const toLogin = () => {
 
           <div class="flex justify-end items-center space-x-10px">
             <ThemeSwitch />
-            <LocaleDropdown class="<xl:text-white dark:text-white" />
           </div>
         </div>
         <Transition appear enter-active-class="animate__animated animate__bounceInRight">

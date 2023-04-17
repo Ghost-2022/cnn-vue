@@ -144,7 +144,12 @@ export default {
     role: '角色管理',
     document: '文档',
     inputPassword: '密码输入框',
-    sticky: '黏性'
+    sticky: '黏性',
+    DataModel: '数据模块',
+    Testset: '测试集',
+    TrainingSet: '训练集',
+    ModelTraining: '模型训练',
+    TrafficIdentification: '恶意流量识别'
   },
   permission: {
     hasPermission: '请设置操作权限值'
@@ -270,6 +275,16 @@ export default {
     start: '开始',
     message:
       '引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能。引导页基于 intro.js'
+  },
+  DataModel: {
+    Testset: '测试集',
+    TrainingSet: '训练集'
+  },
+  ModelTraining: {
+    ModelTraining: '模型训练'
+  },
+  TrafficIdentification: {
+    title: '恶意流量识别'
   },
   iconDemo: {
     icon: '图标',

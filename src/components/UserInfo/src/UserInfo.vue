@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessageBox } from 'element-plus'
-import { useI18n } from '@/hooks/web/useI18n'
-import { useCache } from '@/hooks/web/useCache'
-import { resetRouter } from '@/router'
-import { useRouter } from 'vue-router'
 import { loginOutApi } from '@/api/login'
+import { useCache } from '@/hooks/web/useCache'
 import { useDesign } from '@/hooks/web/useDesign'
+import { useI18n } from '@/hooks/web/useI18n'
+import { resetRouter } from '@/router'
 import { useTagsViewStore } from '@/store/modules/tagsView'
+import { ElDropdown, ElDropdownItem, ElDropdownMenu, ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 const tagsViewStore = useTagsViewStore()
 
@@ -55,9 +55,6 @@ const toDocument = () => {
     </div>
     <template #dropdown>
       <ElDropdownMenu>
-        <ElDropdownItem>
-          <div @click="toDocument">{{ t('common.document') }}</div>
-        </ElDropdownItem>
         <ElDropdownItem divided>
           <div @click="loginOut">{{ t('common.loginOut') }}</div>
         </ElDropdownItem>

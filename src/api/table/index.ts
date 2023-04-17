@@ -2,7 +2,7 @@ import request from '@/config/axios'
 import type { TableData } from './types'
 
 export const getTableListApi = (params: any): Promise<IResponse> => {
-  return request.get({ url: '/example/list', params })
+  return request.get({ url: '/api/', params })
 }
 
 export const saveTableApi = (data: Partial<TableData>): Promise<IResponse> => {
@@ -15,4 +15,12 @@ export const getTableDetApi = (id: string): Promise<IResponse<TableData>> => {
 
 export const delTableListApi = (ids: string[] | number[]): Promise<IResponse> => {
   return request.post({ url: '/example/delete', data: { ids } })
+}
+
+export const getTrainsetListApi = (params: any): Promise<IResponse> => {
+  return request.get({ url: '/api/get-train-set', params })
+}
+
+export const getTestsetListApi = (params: any): Promise<IResponse> => {
+  return request.get({ url: '/api/get-test-set', params })
 }

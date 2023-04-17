@@ -144,7 +144,12 @@ export default {
     role: 'Role management',
     document: 'Document',
     inputPassword: 'InputPassword',
-    sticky: 'Sticky'
+    sticky: 'Sticky',
+    DataModel: 'Data Model',
+    DataSet: 'Data Set',
+    TrainingSet: 'Training Set',
+    ModelTraining: 'Model Training',
+    TrafficIdentification: 'Malicious Traffic Identification'
   },
   permission: {
     hasPermission: 'Please set the operation permission value'
@@ -271,6 +276,16 @@ export default {
     start: 'Start',
     message:
       'The guide page is very useful for some people who enter the project for the first time. You can briefly introduce the functions of the project. The boot page is based on intro js'
+  },
+  DataModel: {
+    DataSet: 'DataSet',
+    TrainingSet: 'TrainingSet'
+  },
+  ModelTraining: {
+    ModelTraining: 'ModelTraining'
+  },
+  TrafficIdentification: {
+    title: 'Malicious Traffic Identification'
   },
   iconDemo: {
     icon: 'Icon',
