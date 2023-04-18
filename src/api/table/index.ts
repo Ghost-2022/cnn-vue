@@ -24,3 +24,7 @@ export const getTrainsetListApi = (params: any): Promise<IResponse> => {
 export const getTestsetListApi = (params: any): Promise<IResponse> => {
   return request.get({ url: '/api/get-test-set', params })
 }
+
+export const getBadDatasetListApi = (params: any): Promise<IResponse> => {
+  return request.get({ url: '/api/get-bad-data', params })
+}

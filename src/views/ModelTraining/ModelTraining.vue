@@ -104,4 +104,8 @@ const onSave = async () => {
 .el-image {
   height: 300px;
 }
+.el-form {
+  width: 50%;
+  margin-left: 25%;
+}
 </style>

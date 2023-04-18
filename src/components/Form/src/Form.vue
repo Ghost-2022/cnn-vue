@@ -298,8 +298,4 @@ export default defineComponent({
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
-.el-form {
-  width: 50%;
-  margin-left: 25%;
-}
 </style>
