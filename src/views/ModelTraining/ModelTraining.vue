@@ -5,7 +5,7 @@ import { Form } from '@/components/Form'
 import { computed, reactive, unref, ref } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import { FormSchema } from '@/types/form'
-import { ElButton, ElImage } from 'element-plus'
+import { ElButton, ElImage, ElMessage } from 'element-plus'
 import { useForm } from '@/hooks/web/useForm'
 import { FormType } from '@/api/form/types'
 import { TrainApi, GetTrainResultApi } from '@/api/form'
@@ -20,7 +20,8 @@ const isMobile = computed(() => appStore.getMobile)
 
 const { register, elFormRef, methods } = useForm()
 
-const timer = ref(0)
+const timerCheckStatus = ref(0)
+const timerGetResult = ref(0)
 const isShow = ref(false)
 
 const rules = {
@@ -53,12 +54,16 @@ const testPngSrc = ref('')
 const checkStatus = async () => {
   const res = await GetTrainResultApi()
   if (res['data']['status']) {
-    window.clearInterval(timer.value)
+    window.clearInterval(timerCheckStatus.value)
     avgLossSrc.value = res['data']['avgLoss']
     trainPngSrc.value = res['data']['trainPng']
     testPngSrc.value = res['data']['testPng']
     isShow.value = true
   }
+}
+
+const getResult = async () => {
+  const res = await GetTrainResultApi()
 }
 
 const onSave = async () => {
@@ -70,9 +75,15 @@ const onSave = async () => {
       try {
         const res = await TrainApi(formData)
         if (res['data']) {
-          timer.value = window.setInterval(checkStatus, 3 * 1000)
+          timerCheckStatus.value = window.setInterval(checkStatus, 3 * 1000)
+          timerGetResult.value = window.setInterval(getResult, 3 * 1000)
+          ElMessage({
+            message: t('ModelTraining.SuccessMsg'),
+            type: 'success'
+          })
         }
       } finally {
+        ElMessage.error(t('ModelTraining.ErrorMsg'))
       }
     }
   })

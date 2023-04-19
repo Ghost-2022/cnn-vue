@@ -284,7 +284,9 @@ export default {
     TrainingSet: '训练集'
   },
   ModelTraining: {
-    ModelTraining: '模型训练'
+    ModelTraining: '模型训练',
+    SuccessMsg: '开始训练...',
+    ErrorMsg: '训练失败，请稍后重试'
   },
   TrafficIdentification: {
     title: '恶意流量识别'

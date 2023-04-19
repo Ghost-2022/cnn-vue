@@ -285,7 +285,9 @@ export default {
     TrainingSet: 'TrainingSet'
   },
   ModelTraining: {
-    ModelTraining: 'ModelTraining'
+    ModelTraining: 'ModelTraining',
+    SuccessMsg: 'Start training...',
+    ErrorMsg: 'Training failed, please try again later'
   },
   TrafficIdentification: {
     title: 'Malicious Traffic Identification'
