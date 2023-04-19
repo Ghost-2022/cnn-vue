@@ -5,7 +5,7 @@ import { Form } from '@/components/Form'
 import { computed, reactive, unref, ref } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import { FormSchema } from '@/types/form'
-import { ElButton, ElImage, ElMessage } from 'element-plus'
+import { ElButton, ElImage, ElMessage, ElTable, ElTableColumn } from 'element-plus'
 import { useForm } from '@/hooks/web/useForm'
 import { FormType } from '@/api/form/types'
 import { TrainApi, GetTrainResultApi } from '@/api/form'
@@ -22,6 +22,7 @@ const { register, elFormRef, methods } = useForm()
 
 const timerCheckStatus = ref(0)
 const timerGetResult = ref(0)
+const tableData = ref([])
 const isShow = ref(false)
 
 const rules = {
@@ -53,17 +54,14 @@ const testPngSrc = ref('')
 
 const checkStatus = async () => {
   const res = await GetTrainResultApi()
-  if (res['data']['status']) {
+  tableData.value = res['data']['list']
+  if (!res['data']['status']) {
     window.clearInterval(timerCheckStatus.value)
     avgLossSrc.value = res['data']['avgLoss']
     trainPngSrc.value = res['data']['trainPng']
     testPngSrc.value = res['data']['testPng']
     isShow.value = true
   }
-}
-
-const getResult = async () => {
-  const res = await GetTrainResultApi()
 }
 
 const onSave = async () => {
@@ -74,13 +72,14 @@ const onSave = async () => {
       const formData = await getFormData<FormType>()
       try {
         const res = await TrainApi(formData)
-        if (res['data']) {
-          timerCheckStatus.value = window.setInterval(checkStatus, 3 * 1000)
-          timerGetResult.value = window.setInterval(getResult, 3 * 1000)
+        if (res['code'] === '0000') {
+          timerCheckStatus.value = window.setInterval(checkStatus, 10 * 1000)
           ElMessage({
             message: t('ModelTraining.SuccessMsg'),
             type: 'success'
           })
+        } else {
+          ElMessage.error(res['message'])
         }
       } finally {
         ElMessage.error(t('ModelTraining.ErrorMsg'))
@@ -103,7 +102,14 @@ const onSave = async () => {
     <div style="display: flex; justify-content: center"
       ><ElButton type="primary" @click="onSave">提交</ElButton></div
     >
-    <div v-show="isShow" style="display: flex; justify-content: center">
+    <ElTable :data="tableData">
+      <ElTableColumn prop="epoch" label="epoch" />
+      <ElTableColumn prop="loss" label="loss" />
+      <ElTableColumn prop="accuracy" label="accuracy" />
+      <ElTableColumn prop="test_loss" label="test_loss" />
+      <ElTableColumn prop="test_accuracy" label="test_accuracy" />
+    </ElTable>
+    <div v-show="isShow" style="display: flex; justify-content: center; margin-top: 20px">
       <ElImage :src="avgLossSrc" />
       <ElImage :src="trainPngSrc" />
       <ElImage :src="testPngSrc" />
@@ -118,5 +124,9 @@ const onSave = async () => {
 .el-form {
   width: 50%;
   margin-left: 25%;
+}
+.el-table {
+  width: 50%;
+  margin: 20px 0 20px 25%;
 }
 </style>
