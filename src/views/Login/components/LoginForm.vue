@@ -127,7 +127,16 @@ const signIn = async () => {
       const formData = await getFormData<UserType>()
 
       try {
-        const res = await loginApi(formData)
+        const res = {
+          code: '0000',
+          data: {
+            username: 'admin',
+            password: 'admin',
+            role: 'admin',
+            roleId: '1',
+            permissions: ['*.*.*']
+          }
+        }
 
         if (res) {
           wsCache.set(appStore.getUserInfo, res.data)

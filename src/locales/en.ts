@@ -290,7 +290,12 @@ export default {
     ErrorMsg: 'Training failed, please try again later'
   },
   TrafficIdentification: {
-    title: 'Malicious Traffic Identification'
+    title: 'Malicious Traffic Identification',
+    SuccessMsg: 'Start identifying...',
+    IdentifySuccess: 'Identify Success',
+    ErrorMsg: 'Recognition failed, please try again later',
+    StartSave: 'Start save',
+    SaveSuccess: 'Save success'
   },
   iconDemo: {
     icon: 'Icon',

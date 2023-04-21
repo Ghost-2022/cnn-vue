@@ -289,7 +289,12 @@ export default {
     ErrorMsg: '训练失败，请稍后重试'
   },
   TrafficIdentification: {
-    title: '恶意流量识别'
+    title: '恶意流量识别',
+    SuccessMsg: '开始识别...',
+    IdentifySuccess: '识别成功',
+    ErrorMsg: '识别失败，请稍后重试',
+    StartSave: '开始保存',
+    SaveSuccess: '保存成功'
   },
   iconDemo: {
     icon: '图标',

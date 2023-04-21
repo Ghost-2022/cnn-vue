@@ -32,7 +32,25 @@ router.beforeEach(async (to, from, next) => {
     } else {
       if (!dictStore.getIsSetDict) {
         // 获取所有字典
-        const res = await getDictApi()
+        const res = {
+          code: '0000',
+          data: {
+            importance: [
+              {
+                value: 0,
+                label: 'tableDemo.commonly'
+              },
+              {
+                value: 1,
+                label: 'tableDemo.good'
+              },
+              {
+                value: 2,
+                label: 'tableDemo.important'
+              }
+            ]
+          }
+        }
         if (res) {
           dictStore.setDictObj(res.data)
           dictStore.setIsSetDict(true)

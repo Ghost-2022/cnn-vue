@@ -2,7 +2,7 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import { useI18n } from '@/hooks/web/useI18n'
 import { reactive, ref } from 'vue'
-import { ElUpload, ElButton } from 'element-plus'
+import { ElUpload, ElButton, ElMessage } from 'element-plus'
 import type {
   UploadInstance,
   UploadProps,
@@ -13,15 +13,14 @@ import type {
 import { useTable } from '@/hooks/web/useTable'
 import { Table } from '@/components/Table'
 import { TableData } from '@/api/table/types'
-import { getBadDatasetListApi } from '@/api/table'
+import { getBadDatasetListApi, saveToDatabase } from '@/api/table'
 import { TableColumn } from '@/types/table'
 
 const { t } = useI18n()
 const upload = ref<UploadInstance>()
+const disableBtn = ref(false)
 
-const baseUrl = import.meta.env.VITE_BASE_URL
-
-const uploadUrl = baseUrl + '/api/identify-file'
+const uploadUrl = '/api/identify-file'
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
   upload.value!.clearFiles()
@@ -31,10 +30,38 @@ const handleExceed: UploadProps['onExceed'] = (files) => {
 
 const submitUpload = () => {
   upload.value!.submit()
+  disableBtn.value = true
+  ElMessage({
+    message: t('TrafficIdentification.SuccessMsg'),
+    type: 'success'
+  })
 }
 const isShow = ref(false)
 
+const save = () => {
+  disableBtn.value = true
+  ElMessage({
+    message: t('TrafficIdentification.StartSave'),
+    type: 'success'
+  })
+  const res = saveToDatabase()
+  disableBtn.value = false
+  if (res['code'] == '0000') {
+    ElMessage({
+      message: t('TrafficIdentification.SaveSuccess'),
+      type: 'success'
+    })
+  } else {
+    ElMessage.error(res['message'])
+  }
+}
+
 const handlerSuccess = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  ElMessage({
+    message: t('TrafficIdentification.IdentifySuccess'),
+    type: 'success'
+  })
+  disableBtn.value = false
   isShow.value = true
   getList()
 }
@@ -107,12 +134,17 @@ const { getList } = methods
       :on-success="handlerSuccess"
     >
       <template #trigger>
-        <ElButton type="primary">选择文件</ElButton>
+        <ElButton type="primary" :disabled="disableBtn">选择文件</ElButton>
       </template>
-      <ElButton class="ml-3" type="success" @click="submitUpload">上传</ElButton>
+      <ElButton class="ml-3" type="success" @click="submitUpload" :disabled="disableBtn"
+        >上传</ElButton
+      >
       <template #tip>
         <div class="el-upload__tip text-red"> 只能上传1个文件，新文件将覆盖旧文件 </div>
       </template>
+      <ElButton class="ml-3" type="success" @click="save" :disabled="disableBtn"
+        >保存到数据库</ElButton
+      >
     </ElUpload>
     <Table
       v-model:pageSize="tableObject.pageSize"

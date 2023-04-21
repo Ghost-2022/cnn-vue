@@ -28,3 +28,7 @@ export const getTestsetListApi = (params: any): Promise<IResponse> => {
 export const getBadDatasetListApi = (params: any): Promise<IResponse> => {
   return request.get({ url: '/api/get-bad-data', params })
 }
+
+export const saveToDatabase = (): Promise<IResponse> => {
+  return request.get({ url: '/api/save-to-database' })
+}

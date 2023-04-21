@@ -21,9 +21,9 @@ const isMobile = computed(() => appStore.getMobile)
 const { register, elFormRef, methods } = useForm()
 
 const timerCheckStatus = ref(0)
-const timerGetResult = ref(0)
 const tableData = ref([])
 const isShow = ref(false)
+const disableBtn = ref(false)
 
 const rules = {
   learningRate: [required()],
@@ -61,6 +61,7 @@ const checkStatus = async () => {
     trainPngSrc.value = res['data']['trainPng']
     testPngSrc.value = res['data']['testPng']
     isShow.value = true
+    disableBtn.value = false
   }
 }
 
@@ -71,8 +72,14 @@ const onSave = async () => {
       const { getFormData } = methods
       const formData = await getFormData<FormType>()
       try {
+        disableBtn.value = true
+        avgLossSrc.value = ''
+        trainPngSrc.value = ''
+        testPngSrc.value = ''
         const res = await TrainApi(formData)
         if (res['code'] === '0000') {
+          tableData.value = []
+          isShow.value = false
           timerCheckStatus.value = window.setInterval(checkStatus, 10 * 1000)
           ElMessage({
             message: t('ModelTraining.SuccessMsg'),
@@ -100,7 +107,7 @@ const onSave = async () => {
       @register="register"
     />
     <div style="display: flex; justify-content: center"
-      ><ElButton type="primary" @click="onSave">提交</ElButton></div
+      ><ElButton type="primary" @click="onSave" :disabled="disableBtn">提交</ElButton></div
     >
     <ElTable :data="tableData">
       <ElTableColumn prop="epoch" label="epoch" />

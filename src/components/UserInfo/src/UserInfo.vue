@@ -27,7 +27,7 @@ const loginOut = () => {
     type: 'warning'
   })
     .then(async () => {
-      const res = await loginOutApi().catch(() => {})
+      const res = { code: '0000', data: null }
       if (res) {
         wsCache.clear()
         tagsViewStore.delAllViews()
