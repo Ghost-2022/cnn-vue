@@ -10,3 +10,11 @@ export type UserType = {
   roleId: string
   permissions: string | string[]
 }
+
+export type RegisterType = {
+  username: string
+  password: string
+  check_password: string
+}
+
+export type RegisterResultType = {}

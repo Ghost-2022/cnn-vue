@@ -5,7 +5,7 @@
   "author": "Archer <502431556@qq.com>",
   "private": false,
   "scripts": {
-    "i": "pnpm install",
+    "i": "npm install",
     "dev": "vite --mode base",
     "ts:check": "vue-tsc --noEmit",
     "build:pro": "vite build --mode pro",

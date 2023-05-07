@@ -99,7 +99,8 @@ export default {
     usernamePlaceholder: '请输入用户名',
     passwordPlaceholder: '请输入密码',
     code: '验证码',
-    codePlaceholder: '请输入验证码'
+    codePlaceholder: '请输入验证码',
+    checkPwd: '两次密码不一致'
   },
   router: {
     login: '登录',

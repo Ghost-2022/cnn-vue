@@ -3,13 +3,15 @@ import { Form } from '@/components/Form'
 import { reactive, ref, unref } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
-import { ElButton, ElInput, FormRules } from 'element-plus'
+import { ElButton, ElMessage, FormRules } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { FormSchema } from '@/types/form'
+import { registerApi } from '@/api/login'
+import { RegisterType } from '@/api/login/types'
 
 const emit = defineEmits(['to-login'])
 
-const { register, elFormRef } = useForm()
+const { register, elFormRef, methods } = useForm()
 
 const { t } = useI18n()
 
@@ -67,13 +69,6 @@ const schema = reactive<FormSchema[]>([
     }
   },
   {
-    field: 'code',
-    label: t('login.code'),
-    colProps: {
-      span: 24
-    }
-  },
-  {
     field: 'register',
     colProps: {
       span: 24
@@ -98,12 +93,25 @@ const loginRegister = async () => {
   const formRef = unref(elFormRef)
   formRef?.validate(async (valid) => {
     if (valid) {
-      try {
-        loading.value = true
-        toLogin()
-      } finally {
-        loading.value = false
+      const { getFormData } = methods
+      const formData = await getFormData<RegisterType>()
+      loading.value = true
+      if (formData.password !== formData.check_password) {
+        ElMessage.error(t('login.checkPwd'))
+      } else {
+        try {
+          const res = await registerApi(formData)
+          if (res.code === '0001') {
+            ElMessage.error(res['message'])
+            loading.value = false
+          } else {
+            toLogin()
+          }
+        } finally {
+          loading.value = false
+        }
       }
+      loading.value = false
     }
   })
 }
@@ -121,12 +129,6 @@ const loginRegister = async () => {
   >
     <template #title>
       <h2 class="text-2xl font-bold text-center w-[100%]">{{ t('login.register') }}</h2>
-    </template>
-
-    <template #code="form">
-      <div class="w-[100%] flex">
-        <ElInput v-model="form['code']" :placeholder="t('login.codePlaceholder')" />
-      </div>
     </template>
 
     <template #register>

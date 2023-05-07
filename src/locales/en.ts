@@ -99,7 +99,8 @@ export default {
     usernamePlaceholder: 'Please input username',
     passwordPlaceholder: 'Please input password',
     code: 'Verification code',
-    codePlaceholder: 'Please input verification code'
+    codePlaceholder: 'Please input verification code',
+    checkPwd: 'Two passwords do not match'
   },
   router: {
     login: 'Login',

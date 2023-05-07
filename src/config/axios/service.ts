@@ -5,6 +5,8 @@ import axios, {
   AxiosResponse,
   AxiosError
 } from 'axios'
+import { useCache } from '@/hooks/web/useCache'
+import { useAppStore } from '@/store/modules/app'
 
 import qs from 'qs'
 
@@ -13,6 +15,8 @@ import { config } from './config'
 import { ElMessage } from 'element-plus'
 
 const { result_code, base_url } = config
+const { wsCache } = useCache()
+const appStore = useAppStore()
 
 export const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH]
 
@@ -25,6 +29,10 @@ const service: AxiosInstance = axios.create({
 // request拦截器
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    const userInfo = wsCache.get(appStore.getUserInfo)
+    if (userInfo && userInfo.token) {
+      config.headers.Authorization = 'Bearer ' + userInfo.token
+    }
     if (
       config.method === 'post' &&
       (config.headers as AxiosRequestHeaders)['Content-Type'] ===
